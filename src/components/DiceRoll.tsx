@@ -12,7 +12,11 @@ const Wrapper = styled.button`
     cursor: pointer;
 `
 
-const DiceRoll = ({onClick}) => {
+type DiceRollProps = {
+    onClick: () => any; 
+}
+
+const DiceRoll = ({onClick} : DiceRollProps) => {
     const [index, setIndex] = useState(0)
     const [speed, setSpeed] = useState(500)
     const dice = [
