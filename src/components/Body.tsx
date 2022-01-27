@@ -3,7 +3,7 @@ import styled from "styled-components"
 const Wrapper = styled.div`
     width: 100%;
     height: 100%;
-    background: hsla(137, 72%, 86%, 1);
+    background: var(--primary);
     display: flex;
     flex-direction: column;
     justify-content: center;   

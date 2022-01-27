@@ -1,128 +1,108 @@
 import axios from 'axios'
 import type { NextPage } from 'next'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Body from '../src/components/Body'
 import { BottomBorder, LeftBorder, RightBorder, TopBorder } from '../src/components/Border'
+import Column from '../src/components/Column'
 import ContentBlock from '../src/components/ContentBlock'
 import DiceRoll from '../src/components/DiceRoll'
 import Row from '../src/components/Row'
 import Typer from '../src/components/Typer'
+import useTyper from '../src/hooks/useTyper'
 const Home: NextPage = () => {
   const [text, setText] = useState('')
   const [author, setAuthor] = useState('')
-  useEffect(() => {
-    getNewText()
-  }, [])
-  const getNewText = () => {
-    axios.get('https://www.reddit.com/r/copypasta/random.json').then(res => {
-      setText(res.data[0].data.children[0].data.selftext)
-      setAuthor(res.data[0].data.children[0].data.author)
-    })
-  }
+  const [greeting, isGreetingFinished] = useTyper({
+    inputWords: 'Welcome :)' ,
+    wpm: 1600
+  })
+  const [linkOne, isLinkOneFinished] = useTyper({
+    inputWords: 'Wordle',
+    wpm: 800,
+    ready: isGreetingFinished
+  })
+  const [linkTwo, isLinkTwoFinished] = useTyper({
+    inputWords: 'Copypasta Reader',
+    wpm: 800,
+    ready: isLinkOneFinished
+  })
 
   return (
     <Body>
-      <Row 
+      <Column
+        height='100%'
         width='100%'
-        maxWidth='880px'
       >
-        <ContentBlock
+        <Row 
           width='100%'
+          maxWidth='880px'
         >
-          <TopBorder
-            showDesktop
-            showMobile
-          />
-          <RightBorder
-            showDesktop
-            showMobile
-          />
-          <LeftBorder
-            showDesktop
-            showMobile
-          />
-          <h1>
-            Copypasta Reader
-          </h1>
-        </ContentBlock>
-      </Row>
-      <Row 
-        width='100%'
-        maxWidth='880px'
-        wrap
-      >
-        <ContentBlock
-          width='70%'
-          mobileWidth='100%'
-          height='400px'
-          mobileHeight='53vh'
-        > 
-          <TopBorder
-            showDesktop
-            showMobile
-          />
-          <RightBorder
-            showDesktop
-            showMobile
-          />
-          <BottomBorder
-            showDesktop
-            showMobile
-          />
-          <LeftBorder
-            showDesktop
-            showMobile
-          />
-          <Typer
-            text={text}
-          />
-        </ContentBlock>
-        <ContentBlock
-          width='30%'
-          mobileWidth='100%'
-        >
-          <TopBorder
-            showDesktop
-          />
-          <RightBorder
-            showDesktop
-            showMobile
-          />
-          <BottomBorder
-            showDesktop
-            showMobile
-          />
-          <LeftBorder
-            showMobile
-          />
-          <DiceRoll
-            onClick={getNewText}
-          />
-        </ContentBlock>
-      </Row>
-      <Row
-        width='100%'
-        maxWidth='880px'
-      >
-        <ContentBlock
+          <ContentBlock
+            width='100%'
+          >
+            <TopBorder
+              showDesktop
+              showMobile
+            />
+            <RightBorder
+              showDesktop
+              showMobile
+            />
+            <LeftBorder
+              showDesktop
+              showMobile
+            />
+            <h1>
+              {greeting}
+            </h1>
+          </ContentBlock>
+        </Row>
+        <Row 
           width='100%'
+          maxWidth='880px' 
+          flex
         >
-          <RightBorder
-            showDesktop
-            showMobile
-          />
-          <BottomBorder
-            showDesktop
-            showMobile
-          />
-          <LeftBorder
-            showDesktop
-            showMobile
-          />
-          <h2> Beautifully Written by: /u/{author} </h2>
-          <p> All posts pulled from <a href='www.reddit.com/r/copypasta'> /r/copypasta </a></p>
-        </ContentBlock>
-      </Row>
+          <ContentBlock
+            width='70%'
+            mobileWidth='100%'
+            flex
+          > 
+            <TopBorder
+              showDesktop
+              showMobile
+            />
+            <RightBorder
+              showDesktop
+              showMobile
+            />
+            <BottomBorder
+              showDesktop
+              showMobile
+            />
+            <LeftBorder
+              showDesktop
+              showMobile
+            />
+            <ul>
+              <li>
+                <Link
+                  href='/wordle'
+                >
+                  {linkOne}
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href='/copypasta'
+                >
+                  {linkTwo}
+                </Link>
+              </li>
+            </ul>
+          </ContentBlock>
+        </Row>
+      </Column>
     </Body>
   )
 }

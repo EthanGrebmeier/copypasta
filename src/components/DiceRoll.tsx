@@ -23,37 +23,37 @@ const DiceRoll = ({onClick} : DiceRollProps) => {
         <UilDiceOne
             key={0}
             size={90}
-            color='var(--dark)'
+            color='var(--secondary)'
             onClick={onClick}
         />, 
         <UilDiceTwo
             key={1}
             size={90}
-            color='var(--dark)'
+            color='var(--secondary)'
             onClick={onClick}
         />, 
         <UilDiceThree
             key={2}
             size={90}
-            color='var(--dark)'
+            color='var(--secondary)'
             onClick={onClick}
         />, 
         <UilDiceFour
             key={3}
             size={90}
-            color='var(--dark)'
+            color='var(--secondary)'
             onClick={onClick}
         />, 
         <UilDiceFive
             key={4}
             size={90}
-            color='var(--dark)'
+            color='var(--secondary)'
             onClick={onClick}
         />, 
         <UilDiceSix
             key={5}
             size={90}
-            color='var(--dark)'
+            color='var(--secondary)'
             onClick={onClick}
         />
     ]

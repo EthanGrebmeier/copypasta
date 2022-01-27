@@ -6,15 +6,19 @@ type ContentBorderProps = {
     height?: string;
     mobileHeight?: string;
     mobileFlex?: string;
+    flex?: boolean;
 }
 
 const Wrapper = styled.div<ContentBorderProps>`
     position: relative;
     width: ${props => props.width};
     height: ${props => props.height};
+    flex: ${props => props.flex && '1'};
+    flex-basis: ${props => props.height};
     @media (max-width: 880px) {
         width: ${props => props.mobileWidth};
         height: ${props => props.mobileHeight};
+        flex-basis: ${props => props.mobileHeight};
         flex: ${props => props.mobileFlex && '1'};
     }
 `
@@ -23,7 +27,15 @@ const Inner = styled.div`
     padding: 10px;   
     max-height: 100%;
     height: 100%;
-    overflow: scroll;
+    overflow-x: auto;
+    &::-webkit-scrollbar {
+        background: none;
+        width: 1px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        outline: 1px solid var(--secondary);
+    }
 `
 
 type ContentTypes = {
@@ -36,6 +48,7 @@ type ContentTypes = {
     left?: boolean;
     mobileWidth?: string;
     mobileHeight?: string;
+    flex?: boolean;
 }
 
 
@@ -44,6 +57,7 @@ const ContentBlock = ({children,
     mobileWidth,
     height,
     mobileHeight,
+    flex,
 } : ContentTypes) : JSX.Element => {
     return (
     <Wrapper
@@ -51,6 +65,7 @@ const ContentBlock = ({children,
         mobileWidth={mobileWidth}
         height={height}
         mobileHeight={mobileHeight}
+        flex={flex}
     >
         <Inner>
             {children}

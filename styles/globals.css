@@ -17,7 +17,10 @@
 */
 html, body, #__next {
   height: 100%;
-  --dark: hsla(137, 72%, 23%, 1);
+  --primary: hsla(137, 72%, 86%, 1);
+  --secondary: hsla(137, 72%, 23%, 1);
+  --secondary-transparent: hsla(137, 72%, 23%, 0.6);
+  --tertiary-transparent: hsla(54, 72%, 50%, 0.6);
 }
 /*
   Typographic tweaks!
@@ -27,7 +30,7 @@ html, body, #__next {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  color: var(--dark);
+  color: var(--secondary);
   font-family: 'Source Serif Pro', serif;
 }
 /*
@@ -57,7 +60,7 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: var(--dark);
+  color: var(--secondary);
 }
 
 @media (max-width: 880px) {

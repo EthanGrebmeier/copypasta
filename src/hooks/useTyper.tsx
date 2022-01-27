@@ -3,10 +3,12 @@ import { useEffect, useCallback, useState } from "react"
 type TyperTypes = {
     inputWords: string;
     wpm?: number;
+    ready?: boolean;
 } 
 
-const useTyper = ({inputWords, wpm = 60} : TyperTypes) : string => {
+const useTyper = ({inputWords, wpm = 600, ready} : TyperTypes) : [string, boolean] => {
     const [currentLetters, setCurrentLetters] = useState('')
+    const [isFinished, setIsFinished] = useState(false)
     const [index, setIndex] = useState(0)
 
     const addLetters = useCallback((interval: any) => {
@@ -16,11 +18,15 @@ const useTyper = ({inputWords, wpm = 60} : TyperTypes) : string => {
             setCurrentLetters(newLetters)
         } else {
             clearInterval(interval)
+            setIsFinished(true)
         }
     }, [index, currentLetters, inputWords])
 
     useEffect(() => {
-        const interval = setInterval(() => addLetters(interval), 1000 / (wpm / 60))
+        let interval
+        if ((typeof ready !== 'undefined' && ready) || typeof ready == 'undefined') {
+            interval = setInterval(() => addLetters(interval), 1000 / (wpm / 60))
+        }
         return () => {
             clearInterval(interval)
         }
@@ -31,7 +37,7 @@ const useTyper = ({inputWords, wpm = 60} : TyperTypes) : string => {
         setIndex(0)
     }, [inputWords])
 
-    return currentLetters
+    return [currentLetters, isFinished]
 } 
 
 export default useTyper
