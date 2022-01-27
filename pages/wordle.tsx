@@ -31,7 +31,6 @@ const Wordle: NextPage = () : JSX.Element => {
           >
             <ContentBlock
               width='100%'
-              justifyContent='space-between'
             >
               <TopBorder
                 showDesktop
