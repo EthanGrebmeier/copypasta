@@ -7,6 +7,7 @@ import { BottomBorder, LeftBorder, RightBorder, TopBorder } from '../src/compone
 import Column from '../src/components/Column'
 import ContentBlock from '../src/components/ContentBlock'
 import DiceRoll from '../src/components/DiceRoll'
+import LinkList from '../src/components/LinkList'
 import Row from '../src/components/Row'
 import Typer from '../src/components/Typer'
 import useTyper from '../src/hooks/useTyper'
@@ -84,22 +85,25 @@ const Home: NextPage = () => {
               showDesktop
               showMobile
             />
-            <ul>
+            <h3>
+              Links
+            </h3>
+            <LinkList>
               <li>
                 <Link
                   href='/wordle'
                 >
-                  {linkOne}
+                  Wordle
                 </Link>
               </li>
               <li>
                 <Link 
                   href='/copypasta'
                 >
-                  {linkTwo}
+                  Copypasta
                 </Link>
               </li>
-            </ul>
+            </LinkList>
           </ContentBlock>
         </Row>
       </Column>
