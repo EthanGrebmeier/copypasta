@@ -121,7 +121,6 @@ const WordContainer = () : JSX.Element => {
                     guess={guessTwo}
                     word={word}
                     isGuessed={guessCount > 1}
-                    isCurrentRow={guessCount == 0}
                     isCurrentRow={guessCount == 1}
                 />
                 <GuessRow
