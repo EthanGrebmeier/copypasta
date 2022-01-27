@@ -60,7 +60,7 @@ const WordContainer = () : JSX.Element => {
 
     const addLetter = (letter) => {
         const currentGuess = guesses[guessCount]
-        if (guessIndex < 5) {
+        if (!isFinished && guessIndex < 5) {
             const oldGuessArray = currentGuess.guessArray
             oldGuessArray[guessIndex] = letter
             currentGuess.setGuessArray(oldGuessArray)
@@ -70,7 +70,7 @@ const WordContainer = () : JSX.Element => {
 
     const removeLetter = () => {
         const currentGuess = guesses[guessCount]
-        if (guessIndex !== 0) {
+        if (!isFinished && guessIndex !== 0) {
             const oldGuessArray = currentGuess.guessArray
             oldGuessArray[guessIndex - 1] = null
             currentGuess.setGuessArray(oldGuessArray)
@@ -79,7 +79,7 @@ const WordContainer = () : JSX.Element => {
     }
 
     const submitGuess = () => {
-        if (guessIndex == 5) {
+        if (!isFinished && guessIndex == 5) {
             console.log(checkGuess(guesses[guessCount].guessArray))
             if (checkGuess(guesses[guessCount].guessArray)) {
                 setStatusMessage('Congrats, you did it!')
@@ -88,11 +88,10 @@ const WordContainer = () : JSX.Element => {
                 setStatusMessage('Better luck next time!')
                 setIsFinished(true)
             } else {
-                setGuessCount(guessCount + 1)
-                setGuessIndex(0)
                 setStatusMessage('')
             }
             setGuessCount(guessCount + 1)
+            setGuessIndex(0)
         } else {
             setStatusMessage('All 5 letters required')
         }
@@ -155,9 +154,9 @@ const WordContainer = () : JSX.Element => {
                 {statusMessage}
             </h3>
             <Keyboard
-                addLetter={!isFinished ? addLetter : undefined}
-                removeLetter={!isFinished ? removeLetter : undefined}
-                submit={!isFinished ? submitGuess : undefined}
+                addLetter={addLetter}
+                removeLetter={removeLetter}
+                submit={submitGuess}
             />
         </Column>
     )
