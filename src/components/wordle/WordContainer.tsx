@@ -78,17 +78,18 @@ const WordContainer = () : JSX.Element => {
     }
 
     const submitGuess = () => {
-        console.log(guessIndex)
         if (guessIndex == 5) {
+            console.log(checkGuess(guesses[guessCount].guessArray))
             if (checkGuess(guesses[guessCount].guessArray)) {
                 setStatusMessage('Congrats, you did it!')
-            }
-            if (guessCount == 5) {
+                setGuessCount(guessCount + 1)
+                setGuessIndex(0)
+            } else if (guessCount == 5) {
+                setGuessCount(guessCount + 1)
+                setGuessIndex(0)
                 setStatusMessage('Better luck next time!')
             } else {
                 setStatusMessage('')
-                setGuessCount(guessCount + 1)
-                setGuessIndex(0)
             }
         } else {
             setStatusMessage('All 5 letters required')
@@ -96,6 +97,8 @@ const WordContainer = () : JSX.Element => {
     }
 
     const checkGuess = (guess) => {
+        console.log(guess)
+        console.log(word)
         for (const letter in guess) {
             if (guess[letter] !== word[letter]) {
                 return false

@@ -9,6 +9,10 @@ const Wrapper = styled.div<LetterElementType>`
     background: ${props => props.isCorrectLetter ? props.isCorrectSpot ? 'var(--secondary-transparent)' : 'var(--tertiary-transparent)' : ''};
     margin: 6px;
     border-radius: 10px;
+    @media (max-width: 880px) {
+        width: 2.4rem;
+        font-size: 1.6rem;
+    }
 `
 type LetterElementType = {
     isCorrectSpot?: boolean,
