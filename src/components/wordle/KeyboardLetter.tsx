@@ -24,7 +24,7 @@ const KeyboardLetter = ({letter, onClick}) => {
     return (
         <Letter
             width='10px'
-            onClick={() => onClick(letter)}
+            onClick={() => onClick && onClick(letter)}
         >
             <p>
                 {letter.toUpperCase()}

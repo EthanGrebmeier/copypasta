@@ -29,6 +29,7 @@ const WordContainer = () : JSX.Element => {
     const [guessFive, setGuessFive] = useState([null, null, null, null, null])
     const [guessSix, setGuessSix] = useState([null, null, null, null, null])
     const [statusMessage, setStatusMessage] = useState('')
+    const [isFinished, setIsFinished] = useState(false)
 
     const guesses : GuessObjectType[] = [
         {
@@ -82,23 +83,22 @@ const WordContainer = () : JSX.Element => {
             console.log(checkGuess(guesses[guessCount].guessArray))
             if (checkGuess(guesses[guessCount].guessArray)) {
                 setStatusMessage('Congrats, you did it!')
-                setGuessCount(guessCount + 1)
-                setGuessIndex(0)
+                setIsFinished(true)
             } else if (guessCount == 5) {
+                setStatusMessage('Better luck next time!')
+                setIsFinished(true)
+            } else {
                 setGuessCount(guessCount + 1)
                 setGuessIndex(0)
-                setStatusMessage('Better luck next time!')
-            } else {
                 setStatusMessage('')
             }
+            setGuessCount(guessCount + 1)
         } else {
             setStatusMessage('All 5 letters required')
         }
     }
 
     const checkGuess = (guess) => {
-        console.log(guess)
-        console.log(word)
         for (const letter in guess) {
             if (guess[letter] !== word[letter]) {
                 return false
@@ -155,9 +155,9 @@ const WordContainer = () : JSX.Element => {
                 {statusMessage}
             </h3>
             <Keyboard
-                addLetter={addLetter}
-                removeLetter={removeLetter}
-                submit={submitGuess}
+                addLetter={!isFinished ? addLetter : undefined}
+                removeLetter={!isFinished ? removeLetter : undefined}
+                submit={!isFinished ? submitGuess : undefined}
             />
         </Column>
     )
