@@ -4,6 +4,7 @@ import Body from "../src/components/Body"
 import { BottomBorder, LeftBorder, RightBorder, TopBorder } from "../src/components/Border"
 import Column from "../src/components/Column"
 import ContentBlock from "../src/components/ContentBlock"
+import HomeButton from "../src/components/HomeButton"
 import Row from "../src/components/Row"
 import Typer from "../src/components/Typer"
 import Letterbox from "../src/components/wordle/LetterBox"
@@ -30,6 +31,7 @@ const Wordle: NextPage = () : JSX.Element => {
           >
             <ContentBlock
               width='100%'
+              justifyContent='space-between'
             >
               <TopBorder
                 showDesktop
@@ -43,9 +45,16 @@ const Wordle: NextPage = () : JSX.Element => {
                 showDesktop
                 showMobile
               />
-              <h1>
-                {greeting}
-              </h1>
+              <Row
+                width='100%'
+                justifyContent='space-between'
+                alignItems='center'
+              >
+                <h1>
+                    {greeting}
+                </h1>
+                <HomeButton/>
+              </Row>
             </ContentBlock>
           </Row>
           <Row 

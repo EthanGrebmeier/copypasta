@@ -5,6 +5,7 @@ import Body from '../src/components/Body'
 import { BottomBorder, LeftBorder, RightBorder, TopBorder } from '../src/components/Border'
 import ContentBlock from '../src/components/ContentBlock'
 import DiceRoll from '../src/components/DiceRoll'
+import HomeButton from '../src/components/HomeButton'
 import Row from '../src/components/Row'
 import Typer from '../src/components/Typer'
 const Home: NextPage = () => {
@@ -41,9 +42,16 @@ const Home: NextPage = () => {
             showDesktop
             showMobile
           />
-          <h1>
-            Copypasta Reader
-          </h1>
+          <Row
+            width='100%'
+            alignItems='center'
+            justifyContent='space-between'
+          >
+            <h1>
+              Copypasta Reader
+            </h1>
+            <HomeButton/>
+          </Row>
         </ContentBlock>
       </Row>
       <Row 

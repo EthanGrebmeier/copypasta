@@ -15,6 +15,8 @@ const Wrapper = styled.div<ContentBorderProps>`
     height: ${props => props.height};
     flex: ${props => props.flex && '1'};
     flex-basis: ${props => props.height};
+    justify-content: ${props => props.justifyContent};
+    align-items: ${props => props.alignItems};
     @media (max-width: 880px) {
         width: ${props => props.mobileWidth};
         height: ${props => props.mobileHeight};
