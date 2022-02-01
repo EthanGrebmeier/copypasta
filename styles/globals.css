@@ -21,6 +21,8 @@ html, body, #__next {
   --secondary: hsla(137, 72%, 23%, 1);
   --secondary-transparent: hsla(137, 72%, 23%, 0.6);
   --tertiary-transparent: hsla(54, 72%, 50%, 0.6);
+  --wrong-transparent: hsla(6, 72%, 50%, 0.6);
+  --grey: hsla(6, 7%, 50%, 0.6);
 }
 /*
   Typographic tweaks!
