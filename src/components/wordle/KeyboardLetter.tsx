@@ -2,9 +2,9 @@ import styled from "styled-components"
 
 type LetterProps = {
     width?: string;
-    correctSpotLetter: boolean;
-    correctLetter: boolean;
-    wrongLetter: boolean;
+    correctSpotLetter?: boolean;
+    correctLetter?: boolean;
+    wrongLetter?: boolean;
 }
 
 const Letter = styled.button<LetterProps>`
