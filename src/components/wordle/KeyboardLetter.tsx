@@ -2,14 +2,20 @@ import styled from "styled-components"
 
 type LetterProps = {
     width?: string;
+    correctSpotLetter: boolean;
+    correctLetter: boolean;
+    wrongLetter: boolean;
 }
 
 const Letter = styled.button<LetterProps>`
     position: relative;
     margin: 3px;
     border-radius: 5px;
-    background: var(--secondary-transparent);
-    padding: 5px;
+    background: ${props => props.correctSpotLetter ? 
+        'var(--secondary-transparent)' : 
+        props.correctLetter ? 'var(--tertiary-transparent)' :
+        props.wrongLetter ? 'var(--wrong-transparent)' : 'var(--grey)'};
+    padding: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,11 +26,20 @@ const Letter = styled.button<LetterProps>`
     border: none;
 `
 
-const KeyboardLetter = ({letter, onClick}) => {
+const KeyboardLetter = ({
+    letter, 
+    onClick, 
+    correctSpotLetters,
+    correctLetters,
+    wrongLetters,
+}) => {
     return (
         <Letter
             width='10px'
             onClick={() => onClick && onClick(letter)}
+            correctSpotLetter={correctSpotLetters?.includes(letter)}
+            correctLetter={correctLetters?.includes(letter)}
+            wrongLetter={wrongLetters?.includes(letter)}
         >
             <p>
                 {letter.toUpperCase()}
