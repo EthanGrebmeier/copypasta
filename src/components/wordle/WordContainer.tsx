@@ -113,9 +113,7 @@ const WordContainer = () : JSX.Element => {
     }
 
     const submitGuess = () => {
-        console.log(selectedWords.length)
-        console.log(possibleWords.length)
-        if (!possibleWords.includes(guesses[guessCount].guessArray.join(''))) {
+        if (![...possibleWords, ...selectedWords].includes(guesses[guessCount].guessArray.join(''))) {
             setStatusMessage('Invalid word')
         } else if (!isFinished && guessIndex == 5) {
             addGuessedLetters(guesses[guessCount].guessArray)
