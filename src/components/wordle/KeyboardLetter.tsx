@@ -1,5 +1,13 @@
 import styled from "styled-components"
 
+type KeyboardLetterProps = {
+    letter: string; 
+    onClick: (any) => any;
+    correctSpotLetters?: string[];
+    correctLetters?: string[];
+    wrongLetters?: string[];
+}
+
 type LetterProps = {
     width?: string;
     correctSpotLetter?: boolean;
@@ -32,7 +40,7 @@ const KeyboardLetter = ({
     correctSpotLetters,
     correctLetters,
     wrongLetters,
-}) => {
+} : KeyboardLetterProps) => {
     return (
         <Letter
             width='10px'
