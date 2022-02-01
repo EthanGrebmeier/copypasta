@@ -3,8 +3,9 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import Row from './Row'
 
-const StyledLink = styled(Link)`
+const Wrapper = styled.span`
     display: block;
+    cursor: pointer;
     p {
         font-size: 2rem;
     }
@@ -12,28 +13,31 @@ const StyledLink = styled(Link)`
 
 const HomeButton = () => {
     return (
-        <StyledLink
-            href='/'
-            passHref
-        >
-           <Row
-            alignItems='center'
-           >
+        <Wrapper>
+            <Link
+                href='/'
+                passHref
+                >
+            <Row
+                alignItems='center'
+                >
 
-            <p
-                style={{
-                    fontSize: '1.2rem',
-                    fontWeight: 'bold'
-                }}
-            > 
-                Home 
-            </p>
-            <UilHome
-                color='var(--secondary)'
-                size='20'
-            />
-            </Row>
-        </StyledLink>
+                <p
+                    style={{
+                        fontSize: '1.2rem',
+                        fontWeight: 'bold',
+                        margin: '8px'
+                    }}
+                    > 
+                    Home 
+                </p>
+                <UilHome
+                    color='var(--secondary)'
+                    size='20'
+                    />
+                </Row>
+            </Link>
+        </Wrapper>
     )
 }
 

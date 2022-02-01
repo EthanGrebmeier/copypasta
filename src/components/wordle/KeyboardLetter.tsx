@@ -32,6 +32,7 @@ const Letter = styled.button<LetterProps>`
     flex-basis: 28px;
     flex-shrink: 1;
     border: none;
+    cursor: pointer;
 `
 
 const KeyboardLetter = ({
