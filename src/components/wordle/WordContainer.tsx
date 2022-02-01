@@ -1,10 +1,10 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Column from "../Column";
-import Row from "../Row";
 import GuessRow from "./GuessRow";
 import Keyboard from "./Keyboard";
-import LetterBox from "./LetterBox";
+import {possibleWords, selectedWords} from '../../constants/wordle'
 
 const Wrapper = styled.div`
     width: 100%;
@@ -19,7 +19,7 @@ type GuessObjectType = {
 }
 
 const WordContainer = () : JSX.Element => {
-    const word = ['p', 'e', 'n', 'i', 's']
+    const [word, setWord] = useState(['e','r','r','o','r'])
     const [guessCount, setGuessCount] = useState(0)
     const [guessIndex, setGuessIndex] = useState(0)
     const [guessOne, setGuessOne] = useState([null, null, null, null, null])
@@ -30,6 +30,19 @@ const WordContainer = () : JSX.Element => {
     const [guessSix, setGuessSix] = useState([null, null, null, null, null])
     const [statusMessage, setStatusMessage] = useState('')
     const [isFinished, setIsFinished] = useState(false)
+    const [wrongLetters, setWrongLetters] = useState([])
+    const [correctLetters, setCorrectLetters] = useState([])
+    const [correctSpotLetters, setCorrectSpotLetters] = useState([])
+
+
+    useEffect(() => {
+        axios.get('https://word-get.herokuapp.com/').then((res) => {
+            setWord(res.data.word)
+            console.log(res)
+        }).catch(err => {
+            console.log(err)
+        })
+    }, [])
 
     const guesses : GuessObjectType[] = [
         {
@@ -78,9 +91,34 @@ const WordContainer = () : JSX.Element => {
         }
     }
 
+    const addGuessedLetters = (guess) => {
+        let newCorrectSpotLetters = [...correctSpotLetters]
+        let newCorrectLetters = [...correctLetters]
+        let newWrongLetters = [...wrongLetters]
+
+        for (const letterIndex in guess) {
+            const letter = guess[letterIndex]
+            if (guess[letterIndex] == word[letterIndex]) {
+                newCorrectSpotLetters.push(letter)
+            } else if (word.includes(letter)) {
+                newCorrectLetters.push(letter)
+            } else {
+                newWrongLetters.push(letter)
+            }
+        }
+
+        setCorrectSpotLetters(Array.from(new Set(newCorrectSpotLetters)))
+        setCorrectLetters(Array.from(new Set(newCorrectLetters)))
+        setWrongLetters(Array.from(new Set(newWrongLetters)))
+    }
+
     const submitGuess = () => {
-        if (!isFinished && guessIndex == 5) {
-            console.log(checkGuess(guesses[guessCount].guessArray))
+        console.log(selectedWords.length)
+        console.log(possibleWords.length)
+        if (!possibleWords.includes(guesses[guessCount].guessArray.join(''))) {
+            setStatusMessage('Invalid word')
+        } else if (!isFinished && guessIndex == 5) {
+            addGuessedLetters(guesses[guessCount].guessArray)
             if (checkGuess(guesses[guessCount].guessArray)) {
                 setStatusMessage('Congrats, you did it!')
                 setIsFinished(true)
@@ -154,6 +192,9 @@ const WordContainer = () : JSX.Element => {
                 {statusMessage}
             </h3>
             <Keyboard
+                correctSpotLetters={correctSpotLetters}
+                correctLetters={correctLetters}
+                wrongLetters={wrongLetters}
                 addLetter={addLetter}
                 removeLetter={removeLetter}
                 submit={submitGuess}
