@@ -5,6 +5,7 @@ import Column from "../Column";
 import GuessRow from "./GuessRow";
 import Keyboard from "./Keyboard";
 import {possibleWords, selectedWords} from '../../constants/wordle'
+import { useRouter } from "next/router";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -33,16 +34,20 @@ const WordContainer = () : JSX.Element => {
     const [wrongLetters, setWrongLetters] = useState([])
     const [correctLetters, setCorrectLetters] = useState([])
     const [correctSpotLetters, setCorrectSpotLetters] = useState([])
+    const router = useRouter()
 
 
     useEffect(() => {
-        axios.get('https://word-get.herokuapp.com/').then((res) => {
-            setWord(res.data.word)
-            console.log(res)
-        }).catch(err => {
-            console.log(err)
-        })
-    }, [])
+        if (typeof router.query?.endless !== 'undefined') {
+            resetGame()
+        } else {
+            axios.get('https://word-get.herokuapp.com/').then((res) => {
+                setWord(res.data.word.split(''))
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+    }, [router])
 
     const guesses : GuessObjectType[] = [
         {
@@ -119,10 +124,10 @@ const WordContainer = () : JSX.Element => {
             addGuessedLetters(guesses[guessCount].guessArray)
             if (checkGuess(guesses[guessCount].guessArray)) {
                 setStatusMessage('Congrats, you did it!')
-                setIsFinished(true)
+                endGame()
             } else if (guessCount == 5) {
                 setStatusMessage('Better luck next time!')
-                setIsFinished(true)
+                endGame()
             } else {
                 setStatusMessage('')
             }
@@ -131,6 +136,35 @@ const WordContainer = () : JSX.Element => {
         } else {
             setStatusMessage('All 5 letters required')
         }
+    }
+
+    const endGame = () => {
+        setIsFinished(true)
+        if (typeof router.query?.endless !== 'undefined') {
+            console.log('ENDLESS MODE')
+            setTimeout(() => {
+                resetGame()
+            }, 3000)
+        }
+    }
+    
+    const resetGame = () => {
+        const index = Math.floor(Math.random() * selectedWords.length)
+        const chosenWord = selectedWords[index].split('')
+        setWord(chosenWord)
+        setGuessOne([null, null, null, null, null])
+        setGuessTwo([null, null, null, null, null])
+        setGuessThree([null, null, null, null, null])
+        setGuessFour([null, null, null, null, null])
+        setGuessFive([null, null, null, null, null])
+        setGuessSix([null, null, null, null, null])
+        setGuessCount(0)
+        setGuessIndex(0)
+        setStatusMessage('')
+        setIsFinished(false)
+        setCorrectLetters([])
+        setCorrectSpotLetters([])
+        setWrongLetters([])
     }
 
     const checkGuess = (guess) => {

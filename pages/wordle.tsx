@@ -1,23 +1,30 @@
 import { NextPage } from "next"
-import { useState } from "react"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import Body from "../src/components/Body"
 import { BottomBorder, LeftBorder, RightBorder, TopBorder } from "../src/components/Border"
 import Column from "../src/components/Column"
 import ContentBlock from "../src/components/ContentBlock"
 import HomeButton from "../src/components/HomeButton"
 import Row from "../src/components/Row"
-import Typer from "../src/components/Typer"
-import Letterbox from "../src/components/wordle/LetterBox"
 import WordContainer from "../src/components/wordle/WordContainer"
 import useTyper from "../src/hooks/useTyper"
 
 const Wordle: NextPage = () : JSX.Element => {
-    const [text, setText] = useState('')
-    const [author, setAuthor] = useState('')
-    const [greeting, isGreetingFinished] = useTyper({
-      inputWords: 'Wordle ' + new Date().toLocaleDateString() ,
-      wpm: 1600
-    })
+  const router = useRouter()
+  const [title, setTitle] = useState('Wordle ' + new Date().toLocaleDateString())
+  const [greeting, isGreetingFinished] = useTyper({
+    inputWords:  title,
+    wpm: 1600
+  })
+
+  useEffect(() => {
+    if (typeof router.query.endless !== 'undefined') {
+      setTitle('Endless Mode')
+    }
+  }, [router])
+
   
     return (
       <Body>
@@ -49,9 +56,16 @@ const Wordle: NextPage = () : JSX.Element => {
                 justifyContent='space-between'
                 alignItems='center'
               >
-                <h1>
+                <Link
+                  href={{
+                    query: {...router.query, endless: 'true'}
+                  }}
+                  passHref
+                >
+                  <h1>
                     {greeting}
-                </h1>
+                  </h1>
+                </Link>
                 <HomeButton/>
               </Row>
             </ContentBlock>
